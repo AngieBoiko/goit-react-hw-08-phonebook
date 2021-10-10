@@ -84,7 +84,17 @@ export default function Registration() {
             />
             <br />
             <ErrorMessage name="confirmPassword" component="div" />
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              type="submit"
+              disabled={
+                isSubmitting ||
+                !(
+                  Object.keys(touched).length ===
+                    Object.keys(INITIAL_VALUES).length &&
+                  Object.keys(errors).length === 0
+                )
+              }
+            >
               Submit
             </button>
           </Form>

@@ -15,12 +15,6 @@ export default function Login() {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = 'Invalid email address';
     }
-    if (!values.password) {
-      errors.password = 'Required';
-    } else if (values.password.length < 7 || values.password.length < 12) {
-      errors.password =
-        'Password should be longer then 7 symbols and shorter than 12 symbols';
-    }
     return errors;
   }, []);
 
@@ -59,7 +53,17 @@ export default function Login() {
               placeholder="Enter password"
             />
             <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              type="submit"
+              disabled={
+                isSubmitting ||
+                !(
+                  Object.keys(touched).length ===
+                    Object.keys(INITIAL_VALUES).length &&
+                  Object.keys(errors).length === 0
+                )
+              }
+            >
               Submit
             </button>
           </Form>
