@@ -1,23 +1,22 @@
 import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Registration from 'components/Registration';
-import Contacts from './components/Contacts';
-import Form from './components/Form';
-import Filter from './components/Filter';
+import Login from 'components/Login';
+import PrivateContactsView from './components/PrivateContactsView';
+import { routes } from 'utils/routes';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/register" exact component={Registration} />
+        <Route path={routes.registration} exact component={Registration} />
+        <Route path={routes.login} exact component={Login} />
+        <Route
+          path={routes.privateContacts}
+          exact
+          component={PrivateContactsView}
+        />
       </Switch>
     </BrowserRouter>
-    // <div>
-    //   <h1>Phonebook</h1>
-    //   <Form />
-    //   <h2>Contacts</h2>
-    //   <Filter />
-    //   <Contacts />
-    // </div>
   );
 }
