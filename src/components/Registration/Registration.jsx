@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Link } from 'react-router-dom';
+import { routes } from 'utils/routes';
 
 const INITIAL_VALUES = {
   name: '',
   email: '',
   password: '',
-  repeatPassword: '',
+  confirmPassword: '',
 };
 
 export default function Registration() {
@@ -15,6 +17,20 @@ export default function Registration() {
       errors.email = 'Required';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
       errors.email = 'Invalid email address';
+    }
+    if (!values.name) {
+      errors.name = 'Required';
+    } else if (values.name.length < 3) {
+      errors.name = 'Name should be longer then 3 symbols';
+    }
+    if (!values.password) {
+      errors.password = 'Required';
+    } else if (values.password.length < 7 || values.password.length < 12) {
+      errors.password =
+        'Password should be longer then 7 symbols and shorter than 12 symbols';
+    }
+    if (values.confirmPassword !== values.password) {
+      errors.confirmPassword = 'Password is not confirmed!';
     }
     return errors;
   }, []);
@@ -44,20 +60,39 @@ export default function Registration() {
           isSubmitting,
         }) => (
           <Form>
-            <Field type="text" name="name" />
+            <label htmlFor="name">Name</label>
+            <Field type="text" name="name" placeholder="Enter name" />
+            <br />
             <ErrorMessage name="name" component="div" />
-            <Field type="email" name="email" />
+            <label htmlFor="email">Email</label>
+            <Field type="email" name="email" placeholder="Enter email" />
+            <br />
             <ErrorMessage name="email" component="div" />
-            <Field type="password" name="password" />
+            <label htmlFor="password">Password</label>
+            <Field
+              type="password"
+              name="password"
+              placeholder="Enter password"
+            />
+            <br />
             <ErrorMessage name="password" component="div" />
-            <Field type="repeatePassword" name="repetePassword" />
-            <ErrorMessage name="password" component="div" />
+            <label htmlFor="confirmPassword">Confirm password</label>
+            <Field
+              type="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm password"
+            />
+            <br />
+            <ErrorMessage name="confirmPassword" component="div" />
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>
           </Form>
         )}
       </Formik>
+      <Link to={routes.login}>
+        Have you alredy have account?We are waiting for you on login page!
+      </Link>
     </div>
   );
 }
