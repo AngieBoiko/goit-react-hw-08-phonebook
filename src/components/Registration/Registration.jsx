@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 import { routes } from 'utils/routes';
-
+import Button from '@material-ui/core/Button';
 const INITIAL_VALUES = {
   name: '',
   email: '',
@@ -25,7 +25,7 @@ export default function Registration() {
     }
     if (!values.password) {
       errors.password = 'Required';
-    } else if (values.password.length < 7 || values.password.length < 12) {
+    } else if (values.password.length < 7 || values.password.length > 12) {
       errors.password =
         'Password should be longer then 7 symbols and shorter than 12 symbols';
     }
@@ -61,11 +61,21 @@ export default function Registration() {
         }) => (
           <Form>
             <label htmlFor="name">Name</label>
-            <Field type="text" name="name" placeholder="Enter name" />
+            <Field
+              type="text"
+              name="name"
+              placeholder="Enter name"
+              onBlur={handleBlur}
+            />
             <br />
             <ErrorMessage name="name" component="div" />
             <label htmlFor="email">Email</label>
-            <Field type="email" name="email" placeholder="Enter email" />
+            <Field
+              type="email"
+              name="email"
+              placeholder="Enter email"
+              onBlur={handleBlur}
+            />
             <br />
             <ErrorMessage name="email" component="div" />
             <label htmlFor="password">Password</label>
@@ -73,6 +83,7 @@ export default function Registration() {
               type="password"
               name="password"
               placeholder="Enter password"
+              onBlur={handleBlur}
             />
             <br />
             <ErrorMessage name="password" component="div" />
@@ -81,10 +92,12 @@ export default function Registration() {
               type="confirmPassword"
               name="confirmPassword"
               placeholder="Confirm password"
+              onBlur={handleBlur}
             />
             <br />
             <ErrorMessage name="confirmPassword" component="div" />
-            <button
+            <Button
+              variant="contained"
               type="submit"
               disabled={
                 isSubmitting ||
@@ -96,7 +109,7 @@ export default function Registration() {
               }
             >
               Submit
-            </button>
+            </Button>
           </Form>
         )}
       </Formik>
