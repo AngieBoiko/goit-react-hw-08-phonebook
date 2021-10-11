@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+//axios.defaults.headers.common.Autorization = `Bearer ${token}`;
 
 export async function fetchContactsAPI() {
   const { data } = await axios.get('/contacts');
