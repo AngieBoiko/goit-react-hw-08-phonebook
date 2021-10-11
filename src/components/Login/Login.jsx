@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { routes } from 'utils/routes';
 
@@ -8,6 +9,12 @@ const INITIAL_VALUES = {
   password: '',
 };
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const onClickToggle = useCallback(prevState => {
+    setShowPassword(prevState => !prevState);
+  }, []);
+
   const validate = useCallback(values => {
     const errors = {};
     if (!values.email) {
@@ -44,16 +51,28 @@ export default function Login() {
         }) => (
           <Form>
             <label htmlFor="email">Email</label>
-            <Field type="email" name="email" placeholder="Enter email" />
+            <Field
+              type="email"
+              name="email"
+              placeholder="Enter email"
+              onBlur={handleBlur}
+            />
+            <br />
             <ErrorMessage name="email" component="div" />
             <label htmlFor="password">Password</label>
             <Field
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               name="password"
               placeholder="Enter password"
+              onBlur={handleBlur}
             />
             <ErrorMessage name="password" component="div" />
-            <button
+            <button type="button" onClick={onClickToggle}>
+              Show password
+            </button>
+            <br />
+            <Button
+              variant="contained"
               type="submit"
               disabled={
                 isSubmitting ||
@@ -65,7 +84,7 @@ export default function Login() {
               }
             >
               Submit
-            </button>
+            </Button>
           </Form>
         )}
       </Formik>
