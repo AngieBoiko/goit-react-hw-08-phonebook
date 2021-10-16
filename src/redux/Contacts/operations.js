@@ -13,7 +13,7 @@ import {
   addContactAPI,
   fetchContactsAPI,
   deleteContactAPI,
-} from 'services/contactsAPI';
+} from 'redux/Contacts/contactsAPI';
 
 export const fetchContacts = () => async dispatch => {
   dispatch(fetchContactsRequest());
