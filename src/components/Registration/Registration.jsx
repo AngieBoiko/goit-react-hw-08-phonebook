@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
-import { routes } from 'utils/routes';
+import routes from 'utils/routes';
+import { register } from 'redux/Auth/usersAPI';
 import Button from '@material-ui/core/Button';
 const INITIAL_VALUES = {
   name: '',
@@ -11,6 +13,8 @@ const INITIAL_VALUES = {
 };
 
 export default function Registration() {
+  const dispatch = useDispatch();
+
   const validate = useCallback(values => {
     const errors = {};
     if (!values.email) {
@@ -35,12 +39,20 @@ export default function Registration() {
     return errors;
   }, []);
 
-  const handleSubmit = useCallback((values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+  const handleSubmit = useCallback(
+    (values, { setSubmitting }) => {
+      const { name, email, password } = values;
+      dispatch(
+        register({
+          name,
+          email,
+          password,
+        }),
+      );
       setSubmitting(false);
-    }, 400);
-  }, []);
+    },
+    [dispatch],
+  );
 
   return (
     <div>
@@ -54,9 +66,9 @@ export default function Registration() {
           values,
           errors,
           touched,
-          handleChange,
           handleBlur,
           handleSubmit,
+          handleChange,
           isSubmitting,
         }) => (
           <Form>
@@ -66,6 +78,7 @@ export default function Registration() {
               name="name"
               placeholder="Enter name"
               onBlur={handleBlur}
+              onChange={handleChange}
             />
             <br />
             <ErrorMessage name="name" component="div" />
@@ -75,6 +88,7 @@ export default function Registration() {
               name="email"
               placeholder="Enter email"
               onBlur={handleBlur}
+              onChange={handleChange}
             />
             <br />
             <ErrorMessage name="email" component="div" />
@@ -84,12 +98,13 @@ export default function Registration() {
               name="password"
               placeholder="Enter password"
               onBlur={handleBlur}
+              onChange={handleChange}
             />
             <br />
             <ErrorMessage name="password" component="div" />
             <label htmlFor="confirmPassword">Confirm password</label>
             <Field
-              type="confirmPassword"
+              type="password"
               name="confirmPassword"
               placeholder="Confirm password"
               onBlur={handleBlur}
