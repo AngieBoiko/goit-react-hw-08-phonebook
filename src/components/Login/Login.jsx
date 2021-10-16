@@ -1,15 +1,18 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { routes } from 'utils/routes';
+import routes from 'utils/routes';
+import { logIn } from 'redux/Auth/usersAPI';
 
 const INITIAL_VALUES = {
   email: '',
   password: '',
 };
-export default function Login() {
+export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const onClickToggle = useCallback(prevState => {
     setShowPassword(prevState => !prevState);
@@ -25,12 +28,13 @@ export default function Login() {
     return errors;
   }, []);
 
-  const handleSubmit = useCallback((values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+  const handleSubmit = useCallback(
+    (values, { setSubmitting }) => {
+      dispatch(logIn(values));
       setSubmitting(false);
-    }, 400);
-  }, []);
+    },
+    [dispatch],
+  );
 
   return (
     <div>
