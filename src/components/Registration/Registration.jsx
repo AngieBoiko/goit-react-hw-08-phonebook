@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import routes from 'utils/routes';
 import { register } from 'redux/Auth/usersAPI';
 import Button from '@material-ui/core/Button';
+import styles from './styles.module.css';
+
 const INITIAL_VALUES = {
   name: '',
   email: '',
@@ -55,8 +57,8 @@ export default function Registration() {
   );
 
   return (
-    <div>
-      <h1>Registration form</h1>
+    <div className={styles.form_container}>
+      <h1 className={styles.form_title}>Registration form</h1>
       <Formik
         initialValues={INITIAL_VALUES}
         validate={validate}
@@ -71,9 +73,10 @@ export default function Registration() {
           handleChange,
           isSubmitting,
         }) => (
-          <Form>
+          <Form className={styles.form}>
             <label htmlFor="name">Name</label>
             <Field
+              className={styles.form_field}
               type="text"
               name="name"
               placeholder="Enter name"
@@ -81,9 +84,14 @@ export default function Registration() {
               onChange={handleChange}
             />
             <br />
-            <ErrorMessage name="name" component="div" />
+            <ErrorMessage
+              className={styles.error_message}
+              name="name"
+              component="div"
+            />
             <label htmlFor="email">Email</label>
             <Field
+              className={styles.form_field}
               type="email"
               name="email"
               placeholder="Enter email"
@@ -91,9 +99,14 @@ export default function Registration() {
               onChange={handleChange}
             />
             <br />
-            <ErrorMessage name="email" component="div" />
+            <ErrorMessage
+              className={styles.error_message}
+              name="email"
+              component="div"
+            />
             <label htmlFor="password">Password</label>
             <Field
+              className={styles.form_field}
               type="password"
               name="password"
               placeholder="Enter password"
@@ -101,17 +114,28 @@ export default function Registration() {
               onChange={handleChange}
             />
             <br />
-            <ErrorMessage name="password" component="div" />
+            <ErrorMessage
+              className={styles.error_message}
+              name="password"
+              component="div"
+            />
             <label htmlFor="confirmPassword">Confirm password</label>
             <Field
+              className={styles.form_field}
               type="password"
               name="confirmPassword"
               placeholder="Confirm password"
               onBlur={handleBlur}
             />
             <br />
-            <ErrorMessage name="confirmPassword" component="div" />
+            <ErrorMessage
+              className={styles.error_message}
+              name="confirmPassword"
+              component="div"
+            />
             <Button
+              className={styles.form_btn}
+              color="primary"
               variant="contained"
               type="submit"
               disabled={
@@ -128,8 +152,8 @@ export default function Registration() {
           </Form>
         )}
       </Formik>
-      <Link to={routes.login}>
-        Have you alredy have account?We are waiting for you on login page!
+      <Link to={routes.login} className={styles.link}>
+        Have you already have account?We are waiting for you on login page!
       </Link>
     </div>
   );

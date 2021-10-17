@@ -1,0 +1,16 @@
+.active {
+  color: orange;
+  font-weight: 700;
+}
+.navigation {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  margin: 10px 0;
+}
+.list_item {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}

@@ -2,12 +2,16 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PrivateRoute from 'components/PrivateRoute';
-import routes from 'utils/routes';
-import AppBar from 'components/AppBar';
-import { fetchCurrentUser } from 'redux/Auth/usersAPI';
-import PublicRoute from 'components/PublicRoute/PublicRoute';
-import authSelectors from 'redux/Auth/authSelectors';
 import Spinner from 'components/Loader';
+import AppBar from 'components/AppBar';
+import Container from 'components/Container';
+import PublicRoute from 'components/PublicRoute';
+import routes from 'utils/routes';
+import { fetchCurrentUser } from 'redux/Auth/usersAPI';
+import authSelectors from 'redux/Auth/authSelectors';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LogIn = lazy(() => import('components/LogIn'));
 const Registration = lazy(() => import('components/Registration'));
@@ -26,11 +30,8 @@ export default function App() {
   return isFetchingUser ? (
     <Spinner />
   ) : (
-    <>
-      <div>
-        <AppBar />
-      </div>
-
+    <Container>
+      <AppBar />
       <Switch>
         <Suspense fallback={<Spinner />}>
           <PublicRoute exact path={routes.homePage}>
@@ -57,6 +58,7 @@ export default function App() {
           </PrivateRoute>
         </Suspense>
       </Switch>
-    </>
+      <ToastContainer />
+    </Container>
   );
 }

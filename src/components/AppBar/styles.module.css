@@ -1,0 +1,6 @@
+.header {
+  border-bottom: 3px rgb(27, 88, 202) solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}

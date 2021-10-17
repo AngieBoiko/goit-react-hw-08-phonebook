@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import routes from 'utils/routes';
 import { logIn } from 'redux/Auth/usersAPI';
+import styles from './styles.module.css';
 
 const INITIAL_VALUES = {
   email: '',
@@ -38,7 +39,7 @@ export default function LogIn() {
 
   return (
     <div>
-      <h1>Login form</h1>
+      <h1 className={styles.form_title}>Login form</h1>
       <Formik
         initialValues={INITIAL_VALUES}
         validate={validate}
@@ -53,29 +54,41 @@ export default function LogIn() {
           handleSubmit,
           isSubmitting,
         }) => (
-          <Form>
-            <label htmlFor="email">Email</label>
+          <Form className={styles.form}>
+            <label htmlFor="email">Email </label>
             <Field
+              className={styles.form_field}
               type="email"
               name="email"
               placeholder="Enter email"
               onBlur={handleBlur}
             />
             <br />
-            <ErrorMessage name="email" component="div" />
-            <label htmlFor="password">Password</label>
+            <ErrorMessage
+              className={styles.error_message}
+              name="email"
+              component="div"
+            />
+            <label htmlFor="password">Password </label>
             <Field
+              className={styles.form_field}
               type={showPassword ? 'text' : 'password'}
               name="password"
               placeholder="Enter password"
               onBlur={handleBlur}
             />
-            <ErrorMessage name="password" component="div" />
+            <ErrorMessage
+              className={styles.error_message}
+              name="password"
+              component="div"
+            />
             <button type="button" onClick={onClickToggle}>
               Show password
             </button>
             <br />
             <Button
+              className={styles.form_btn}
+              color="primary"
               variant="contained"
               type="submit"
               disabled={
@@ -83,6 +96,7 @@ export default function LogIn() {
                 !(
                   Object.keys(touched).length ===
                     Object.keys(INITIAL_VALUES).length &&
+                  values.password.length !== 0 &&
                   Object.keys(errors).length === 0
                 )
               }
@@ -92,7 +106,7 @@ export default function LogIn() {
           </Form>
         )}
       </Formik>
-      <Link to={routes.registration}>
+      <Link to={routes.registration} className={styles.link}>
         Have not account yet?We are waiting for you on registration page!
       </Link>
     </div>
