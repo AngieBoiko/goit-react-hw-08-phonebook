@@ -1,11 +1,13 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PrivateRoute from 'components/PrivateRoute';
 import routes from 'utils/routes';
 import AppBar from 'components/AppBar';
 import { fetchCurrentUser } from 'redux/Auth/usersAPI';
 import PublicRoute from 'components/PublicRoute/PublicRoute';
+import authSelectors from 'redux/Auth/authSelectors';
+import Spinner from 'components/Loader';
 
 const LogIn = lazy(() => import('components/LogIn'));
 const Registration = lazy(() => import('components/Registration'));
@@ -19,16 +21,27 @@ export default function App() {
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
+  const isFetchingUser = useSelector(authSelectors.isFetchingUser);
 
-  return (
-    <BrowserRouter>
-      <AppBar />
+  return isFetchingUser ? (
+    <Spinner />
+  ) : (
+    <>
+      <div>
+        <AppBar />
+      </div>
+
       <Switch>
-        <Suspense fallback={<p>Загружаем...</p>}>
+        <Suspense fallback={<Spinner />}>
           <PublicRoute exact path={routes.homePage}>
             <HomePage />
           </PublicRoute>
-          <PublicRoute exact path={routes.registration} restricted>
+          <PublicRoute
+            exact
+            path={routes.registration}
+            redirectTo={routes.privateContacts}
+            restricted
+          >
             <Registration />
           </PublicRoute>
           <PublicRoute
@@ -44,6 +57,6 @@ export default function App() {
           </PrivateRoute>
         </Suspense>
       </Switch>
-    </BrowserRouter>
+    </>
   );
 }
