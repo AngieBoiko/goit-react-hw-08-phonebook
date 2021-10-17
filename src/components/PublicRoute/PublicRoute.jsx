@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router';
+import { Redirect, Route } from 'react-router-dom';
 import authSelectors from 'redux/Auth';
 
 export default function PublicRoute(
@@ -8,10 +8,10 @@ export default function PublicRoute(
   redirectTo = '/',
   ...props
 ) {
-  const isLoggedin = authSelectors.isLoggedin;
+  const isLoggedIn = authSelectors.isLoggedIn;
   return (
     <Route {...props}>
-      {isLoggedin && restricted ? <Redirect to={redirectTo} /> : children}
+      {isLoggedIn && restricted ? <Redirect to={redirectTo} /> : children}
     </Route>
   );
 }

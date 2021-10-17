@@ -25,16 +25,20 @@ export default function App() {
       <AppBar />
       <Switch>
         <Suspense fallback={<p>Загружаем...</p>}>
-          {/* <PublicRoute exact path={routes.homePage}>
+          <PublicRoute exact path={routes.homePage}>
             <HomePage />
+          </PublicRoute>
+          <PublicRoute exact path={routes.registration} restricted>
+            <Registration />
           </PublicRoute>
           <PublicRoute
             exact
             path={routes.login}
             redirectTo={routes.privateContacts}
+            restricted
           >
             <LogIn />
-          </PublicRoute> */}
+          </PublicRoute>
           <PrivateRoute path={routes.privateContacts} redirectTo={routes.login}>
             <PrivateContactsView />
           </PrivateRoute>
