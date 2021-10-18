@@ -56,7 +56,6 @@ export const fetchCurrentUser = createAsyncThunk(
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
     if (persistedToken === null) {
-      toast.error('Unfortunately, something go wrong!');
       return thunkAPI.rejectWithValue();
     }
     try {
